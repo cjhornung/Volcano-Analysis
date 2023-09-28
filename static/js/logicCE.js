@@ -74,6 +74,8 @@ d3.json(geoData).then(function(data) {
         <h3>Hazard: ${features[i].properties.hazard}</h3> <h3>Risk: ${features[i].properties.risk}</h3> 
         `).addTo(myMap);
      }
+
+ 
      .legend {
         background-color: white; /* Set the background color of the legend */
         padding: 5px; /* Add padding for spacing */
@@ -119,4 +121,3 @@ legend.onAdd = function (map) {
 
 // Add the legend to the map
 legend.addTo(myMap);
-});
