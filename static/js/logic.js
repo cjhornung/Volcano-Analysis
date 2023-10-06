@@ -11,7 +11,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 //Use the D3 library to read in samples.json from the URL:
-const geoData = "https://s3.us-east-1.amazonaws.com/hdx-production-filestore/resources/7234d067-2d74-449a-9c61-22ae6d98d928/volcano.json?AWSAccessKeyId=AKIAXYC32WNAS5V67V55&Signature=zWpJJG%2BwupJ8QbEe8pK%2F0ZzAHj8%3D&Expires=1696214866";
+const geoData = "https://s3.us-east-1.amazonaws.com/hdx-production-filestore/resources/7234d067-2d74-449a-9c61-22ae6d98d928/volcano.json?AWSAccessKeyId=AKIAXYC32WNAS5V67V55&Signature=71rAPS%2BmvVogKDbLtz1koT%2BlZNA%3D&Expires=1696542179";
 
 
 // Fetch the JSON data and console log it
@@ -83,8 +83,8 @@ function createLegend() {
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function () {
             var div = L.DomUtil.create('div', 'info legend');
-            var colors = ["#FF0000", "#FD4900", "#F66D00", "#E98B00", "#D7A700", "#BFBF00", "#A0D600", "#76EB00", "#FFFFFF"];
-            var labels = ["VEI 6", "VEI 5", "VEI 4", "VEI 3", "VEI 2", "VEI 1", "VEI 0", "No Confirmed Eruptions", "Unknown"]
+            var colors = ["#FF0000", "#FD4900", "#F66D00", "#E98B00", "#D7A700", "#BFBF00", "#A0D600", "#76EB00", "#00ff00","#FFFFFF"];
+            var labels = ["VEI 7","VEI 6", "VEI 5", "VEI 4", "VEI 3", "VEI 2", "VEI 1", "VEI 0", "No Confirmed Eruptions", "Unknown"]
             // title
             div.innerHTML += '<h4>Volcano VEI Holoce</h4>';
             for (var i = 0; i < colors.length; i++) {
@@ -99,52 +99,3 @@ function createLegend() {
     createLegend();
 });
 
-// Plotly Chart for Top 10 Volcanic Eruptions with the Highest Human Death Toll
-// Load the CSV file using Plotly.d3.csv
-Plotly.d3.csv('volcanic_eruptions_by_death_toll_df.csv', function(data) {
-
-    // Take the first 10 rows
-    var topTen = data.slice(0, 10);
-    
-    // Extract Volcanic Eruptions with Human Death Toll (Min) and Human Death Toll (Max) data for double horizontal bar graph
-    var deathtollMin = topTen.map(function(row) {
-        return row.Minimum;
-      });
-    
-      var deathtollMax = topTen.map(function(row) {
-        return row.Maximum;
-      });
-    
-      var volcanicEruption = topTen.map(function(row) {
-        return row.Volcano;
-      });
-    
-    // Create a horizontal bar graph using Plotly.newPlot
-    var graphData = [
-        {
-          x: volcanicEruption,
-          y: deathtollMin,
-          type: 'bar',
-          orientation: 'h',
-          name: 'Human Death Toll (Min)'
-        },
-        {
-          x: volcanicEruption,
-          y: deathtollMax,
-          type: 'bar',
-          orientation: 'h',
-          name: 'Human Death Toll (Max)'
-        }
-      ];
-    
-      var layout = {
-        title: 'Top 10 Volcanic Eruptions with the Highest Human Death Toll',
-        xaxis:  {title: 'Volcanic Eruption'},
-        yaxis: {title: 'Human Death Toll'},
-        // Min and Max Death Tolls displayed next to each other
-        barmode: 'group'
-      };
-    
-      Plotly.newPlot('bar-graph', graphData, layout);
-    });
-    
